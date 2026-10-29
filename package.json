@@ -1,0 +1,63 @@
+{
+  "name": "blog",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "npm run author:check && vite build && npm run images:optimize && node ./scripts/build-cname.mjs && node ./scripts/validate-hub-contract.mjs && node ./scripts/audit-discovery.mjs && pagefind --site build",
+    "preview": "node ./scripts/preview.mjs",
+    "posts:ids": "node ./scripts/post-ids.mjs --write",
+    "posts:ids:check": "node ./scripts/post-ids.mjs --check",
+    "hub:validate": "node ./scripts/validate-hub-contract.mjs",
+    "translate:content": "node ./scripts/sync-content.mjs",
+    "content:prepare": "node ./scripts/sync-content.mjs --prepare",
+    "author:context": "node ./scripts/authoring.mjs context",
+    "author:new": "node ./scripts/authoring.mjs new",
+    "author:status": "node ./scripts/authoring.mjs status",
+    "author:translation": "node ./scripts/authoring.mjs translation",
+    "author:check": "node ./scripts/authoring.mjs check",
+    "author:verify": "node ./scripts/authoring.mjs verify",
+    "author:deploy": "node ./scripts/authoring.mjs deploy",
+    "author:deploy-status": "node ./scripts/authoring.mjs deploy-status",
+    "translate:posts": "npm run translate:content",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "npm run author:check && npm run posts:ids:check && npm run taxonomy:check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "update:check": "node ./scripts/validate-update.mjs",
+    "site:setup": "node ./scripts/setup.mjs inspect",
+    "site:configure": "node ./scripts/setup.mjs apply",
+    "site:check": "node ./scripts/setup.mjs check",
+    "site:pages": "node ./scripts/setup.mjs pages",
+    "site:pages:status": "node ./scripts/setup.mjs pages-status",
+    "discovery:check": "node ./scripts/audit-discovery.mjs",
+    "taxonomy:sync": "node ./scripts/taxonomy.mjs",
+    "taxonomy:check": "node ./scripts/taxonomy.mjs --check",
+    "site:app:status": "node ./scripts/setup.mjs app-status",
+    "images:optimize": "node ./scripts/optimize-images.mjs"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.50.2",
+    "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "@types/node": "^24",
+    "cheerio": "^1.2.0",
+    "pagefind": "^1.5.0",
+    "sharp": "0.35.5",
+    "svelte": "^5.54.0",
+    "svelte-check": "^4.4.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@gitblogapp/browser": "0.1.1",
+    "@gitblogapp/cli": "0.1.1",
+    "@gitblogapp/core": "0.1.1",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "marked": "^18.0.0"
+  },
+  "engines": {
+    "node": ">=24.12.0"
+  }
+}
